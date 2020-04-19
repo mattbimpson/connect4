@@ -60,6 +60,11 @@ int main()
     return 0;
 }
 
+char getMark(bool isPlayer)
+{
+    return isPlayer ? 'X' : 'O';
+}
+
 void sleep()
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -77,7 +82,7 @@ void placeToken(int col, bool isPlayer)
     {
         if (!isOccupied(text))
         {
-            text = isPlayer ? 'X' : 'O';
+            text = getMark(isPlayer);
             return;
         }
     }
@@ -148,7 +153,7 @@ bool checkVertical(char mark)
 
 bool hasMadeARow(bool isPlayer)
 {
-    char mark = isPlayer ? 'X' : 'O';
+    char mark = getMark(isPlayer);
 
     // Horizontal
     if (checkHorizontal(mark)) return true;
