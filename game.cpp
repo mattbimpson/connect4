@@ -52,7 +52,7 @@ int main()
             gameOver = true;
         }
 
-        if (!gameOver) drawBoard();
+        drawBoard();
 
         ++turnCount;
     } while (!gameOver);
