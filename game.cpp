@@ -3,20 +3,22 @@
 #include <thread>
 using namespace std;
 
-int playerMoves[21];
-int cpuMoves[21];
-string column1[7] = { " ", " ", " ", " ", " ", " ", " " };
-string column2[7] = { " ", " ", " ", " ", " ", " ", " " };
-string column3[7] = { " ", " ", " ", " ", " ", " ", " " };
-string column4[7] = { " ", " ", " ", " ", " ", " ", " " };
-string column5[7] = { " ", " ", " ", " ", " ", " ", " " };
-string column6[7] = { " ", " ", " ", " ", " ", " ", " " };
-string column7[7] = { " ", " ", " ", " ", " ", " ", " " };
+string columns[7][6] = {
+    { " ", " ", " ", " ", " ", " " },
+    { " ", " ", " ", " ", " ", " " },
+    { " ", " ", " ", " ", " ", " " },
+    { " ", " ", " ", " ", " ", " " },
+    { " ", " ", " ", " ", " ", " " },
+    { " ", " ", " ", " ", " ", " " },
+    { " ", " ", " ", " ", " ", " " }
+};
+
 int turnCount = 0;
 
 void drawBoard();
 void placeToken(int col, bool isPlayer);
 void sleep();
+bool checkForWin();
 
 int main()
 {
@@ -38,13 +40,15 @@ int main()
         {
             cout << "CPU takes their turn..." << endl;
             sleep();
-            column = rand() % 8;
+            column = rand() % 7;
         }
         
         placeToken(column, isPlayerTurn);
         drawBoard();
-
-        
+        if(checkForWin())
+        {
+            cout << isPlayerTurn ? "You won!" : "CPU wins :(";
+        }
 
         if (turnCount == 42) gameOver = true;
         ++turnCount;
@@ -65,81 +69,20 @@ bool isOccupied(string text)
 
 void placeToken(int col, bool isPlayer)
 {
-    switch(col)
+    --col;
+    for(string &text : columns[col])
     {
-        case 1:
-            for(string &text : column1)
-            {
-                if (!isOccupied(text))
-                {
-                    text = isPlayer ? "X" : "O";
-                    return;
-                }
-            }
-            break;
-        case 2:
-            for(string &text : column2)
-            {
-                if (!isOccupied(text))
-                {
-                    text = isPlayer ? "X" : "O";
-                    return;
-                }
-            }
-            break;
-        case 3:
-            for(string &text : column3)
-            {
-                if (!isOccupied(text))
-                {
-                    text = isPlayer ? "X" : "O";
-                    return;
-                }
-            }
-            break;
-        case 4:
-            for(string &text : column4)
-            {
-                if (!isOccupied(text))
-                {
-                    text = isPlayer ? "X" : "O";
-                    return;
-                }
-            }
-            break;
-        case 5:
-            for(string &text : column5)
-            {
-                if (!isOccupied(text))
-                {
-                    text = isPlayer ? "X" : "O";
-                    return;
-                }
-            }
-            break;
-        case 6:
-            for(string &text : column6)
-            {
-                if (!isOccupied(text))
-                {
-                    text = isPlayer ? "X" : "O";
-                    return;
-                }
-            }
-            break;
-        case 7:
-            for(string &text : column7)
-            {
-                if (!isOccupied(text))
-                {
-                    text = isPlayer ? "X" : "O";
-                    return;
-                }
-            }
-            break;
-        default:
-            break;
+        if (!isOccupied(text))
+        {
+            text = isPlayer ? "X" : "O";
+            return;
+        }
     }
+}
+
+bool checkForWin()
+{
+    return false;
 }
 
 void drawBoard()
@@ -149,22 +92,22 @@ void drawBoard()
     cout << endl;
     cout << " _________________________________________" << endl;
     cout << "|     |     |     |     |     |     |     |" << endl;
-    cout << "|  " << column1[5] << "  |  " << column2[5] << "  |  " << column3[5] << "  |  " << column4[5] << "  |  " << column5[5] << "  |  " << column6[5] << "  |  " << column7[5] << "  |" << endl;
+    cout << "|  " << columns[0][5] << "  |  " << columns[1][5] << "  |  " << columns[2][5] << "  |  " << columns[3][5] << "  |  " << columns[4][5] << "  |  " << columns[5][5] << "  |  " << columns[6][5] << "  |" << endl;
     cout << "|_____|_____|_____|_____|_____|_____|_____|" << endl;
     cout << "|     |     |     |     |     |     |     |" << endl;
-    cout << "|  " << column1[4] << "  |  " << column2[4] << "  |  " << column3[4] << "  |  " << column4[4] << "  |  " << column5[4] << "  |  " << column6[4] << "  |  " << column7[4] << "  |" << endl;
+    cout << "|  " << columns[0][4] << "  |  " << columns[1][4] << "  |  " << columns[2][4] << "  |  " << columns[3][4] << "  |  " << columns[4][4] << "  |  " << columns[5][4] << "  |  " << columns[6][4] << "  |" << endl;
     cout << "|_____|_____|_____|_____|_____|_____|_____|" << endl;
     cout << "|     |     |     |     |     |     |     |" << endl;
-    cout << "|  " << column1[3] << "  |  " << column2[3] << "  |  " << column3[3] << "  |  " << column4[3] << "  |  " << column5[3] << "  |  " << column6[3] << "  |  " << column7[3] << "  |" << endl;
+    cout << "|  " << columns[0][3] << "  |  " << columns[1][3] << "  |  " << columns[2][3] << "  |  " << columns[3][3] << "  |  " << columns[4][3] << "  |  " << columns[5][3] << "  |  " << columns[6][3] << "  |" << endl;
     cout << "|_____|_____|_____|_____|_____|_____|_____|" << endl;
     cout << "|     |     |     |     |     |     |     |" << endl;
-    cout << "|  " << column1[2] << "  |  " << column2[2] << "  |  " << column3[2] << "  |  " << column4[2] << "  |  " << column5[2] << "  |  " << column6[2] << "  |  " << column7[2] << "  |" << endl;
+    cout << "|  " << columns[0][2] << "  |  " << columns[1][2] << "  |  " << columns[2][2] << "  |  " << columns[3][2] << "  |  " << columns[4][2] << "  |  " << columns[5][2] << "  |  " << columns[6][2] << "  |" << endl;
     cout << "|_____|_____|_____|_____|_____|_____|_____|" << endl;
     cout << "|     |     |     |     |     |     |     |" << endl;
-    cout << "|  " << column1[1] << "  |  " << column2[1] << "  |  " << column3[1] << "  |  " << column4[1] << "  |  " << column5[1] << "  |  " << column6[1] << "  |  " << column7[1] << "  |" << endl;
+    cout << "|  " << columns[0][1] << "  |  " << columns[1][1] << "  |  " << columns[2][1] << "  |  " << columns[3][1] << "  |  " << columns[4][1] << "  |  " << columns[5][1] << "  |  " << columns[6][1] << "  |" << endl;
     cout << "|_____|_____|_____|_____|_____|_____|_____|" << endl;
     cout << "|     |     |     |     |     |     |     |" << endl;
-    cout << "|  " << column1[0] << "  |  " << column2[0] << "  |  " << column3[0] << "  |  " << column4[0] << "  |  " << column5[0] << "  |  " << column6[0] << "  |  " << column7[0] << "  |" << endl;
+    cout << "|  " << columns[0][0] << "  |  " << columns[1][0] << "  |  " << columns[2][0] << "  |  " << columns[3][0] << "  |  " << columns[4][0] << "  |  " << columns[5][0] << "  |  " << columns[6][0] << "  |" << endl;
     cout << "|_____|_____|_____|_____|_____|_____|_____|" << endl;
     cout << endl;
 }
