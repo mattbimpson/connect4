@@ -151,6 +151,8 @@ bool checkVertical(char mark)
     return false;
 }
 
+// Todo: very inefficient with so many loops,
+// figure out how to improve this
 bool hasMadeARow(bool isPlayer)
 {
     char mark = getMark(isPlayer);
