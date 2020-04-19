@@ -1,4 +1,6 @@
 #include<iostream>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 int playerMoves[21];
@@ -14,6 +16,7 @@ int turnCount = 0;
 
 void drawBoard();
 void placeToken(int col, bool isPlayer);
+void sleep();
 
 int main()
 {
@@ -24,17 +27,35 @@ int main()
     bool gameOver = false;
     do
     {
-        cout << "Choose a column #1 - 7:" << endl;
-        cout << endl;
+        bool isPlayerTurn = (turnCount % 2 == 0);
         int column = 0;
-        cin >> column;
-        placeToken(column, true);
+        if (isPlayerTurn)
+        {
+            cout << "Choose a column #1 - 7:" << endl;
+            cout << endl;
+            cin >> column;
+        } else
+        {
+            cout << "CPU takes their turn..." << endl;
+            sleep();
+            column = rand() % 8;
+        }
+        
+        placeToken(column, isPlayerTurn);
         drawBoard();
 
+        
+
         if (turnCount == 42) gameOver = true;
+        ++turnCount;
     } while (!gameOver);
     
     return 0;
+}
+
+void sleep()
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 }
 
 bool isOccupied(string text)
@@ -119,8 +140,6 @@ void placeToken(int col, bool isPlayer)
         default:
             break;
     }
-
-    ++turnCount;
 }
 
 void drawBoard()
