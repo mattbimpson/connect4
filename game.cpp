@@ -3,14 +3,14 @@
 #include <thread>
 using namespace std;
 
-string columns[7][6] = {
-    { " ", " ", " ", " ", " ", " " },
-    { " ", " ", " ", " ", " ", " " },
-    { " ", " ", " ", " ", " ", " " },
-    { " ", " ", " ", " ", " ", " " },
-    { " ", " ", " ", " ", " ", " " },
-    { " ", " ", " ", " ", " ", " " },
-    { " ", " ", " ", " ", " ", " " }
+char columns[7][6] = {
+    { ' ', ' ', ' ', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ', ' ', ' ' }
 };
 
 int turnCount = 0;
@@ -18,7 +18,7 @@ int turnCount = 0;
 void drawBoard();
 void placeToken(int col, bool isPlayer);
 void sleep();
-bool checkForWin();
+bool hasMadeARow(bool isPlayer);
 
 int main()
 {
@@ -44,13 +44,16 @@ int main()
         }
         
         placeToken(column, isPlayerTurn);
-        drawBoard();
-        if(checkForWin())
+
+        if(hasMadeARow(isPlayerTurn))
         {
             cout << isPlayerTurn ? "You won!" : "CPU wins :(";
+            cin.get();
+            gameOver = true;
         }
 
-        if (turnCount == 42) gameOver = true;
+        if (!gameOver) drawBoard();
+
         ++turnCount;
     } while (!gameOver);
     
@@ -62,26 +65,54 @@ void sleep()
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 }
 
-bool isOccupied(string text)
+bool isOccupied(char text)
 {
-    return text != " ";
+    return text != ' ';
 }
 
 void placeToken(int col, bool isPlayer)
 {
     --col;
-    for(string &text : columns[col])
+    for(char &text : columns[col])
     {
         if (!isOccupied(text))
         {
-            text = isPlayer ? "X" : "O";
+            text = isPlayer ? 'X' : 'O';
             return;
         }
     }
 }
 
-bool checkForWin()
+bool hasMadeARow(bool isPlayer)
 {
+    char mark = isPlayer ? 'X' : 'O';
+
+    // Horizontal
+    int matching = 0;
+    for (int colIndex = 0; colIndex < 7; colIndex++)
+    {
+        if (columns[colIndex][0] == mark || columns[colIndex][1] == mark || columns[colIndex][2] == mark || columns[colIndex][3] == mark)
+        {
+            ++matching;
+            if (matching == 4) return true; 
+        }
+    }
+
+    // Vertical
+    matching = 0;
+    for (int rowIndex = 0; rowIndex < 7; rowIndex++)
+    {
+        if (columns[0][rowIndex] == mark || columns[1][rowIndex] == mark || columns[2][rowIndex] == mark || columns[3][rowIndex] == mark)
+        {
+            ++matching;
+            if (matching == 4) return true; 
+        }
+    }
+
+    // Diagonal-up
+
+    // Diagonal-down
+
     return false;
 }
 
