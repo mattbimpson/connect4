@@ -62,7 +62,7 @@ int main()
 
 void sleep()
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 bool isOccupied(char text)
@@ -83,35 +83,95 @@ void placeToken(int col, bool isPlayer)
     }
 }
 
+bool checkDiagonalRight(char mark, int startX, int startY, bool up)
+{
+    int matching = 0;
+    int rowIndex = startY;
+    for (int colIndex = startX; colIndex < 7; colIndex++)
+    {
+        if (columns[colIndex][rowIndex] == mark)
+        {
+            ++matching;
+            if (matching == 4) return true;
+        }
+
+        if (up)
+            ++rowIndex;
+        else
+            --rowIndex;
+    }
+
+    return false;
+}
+
+bool checkHorizontal(char mark)
+{
+    int matching = 0;
+    for (int rowIndex = 0; rowIndex < 6; rowIndex++)
+    {
+        for (int colIndex = 0; colIndex < 7; colIndex++)
+        {
+            if (columns[colIndex][rowIndex] == mark)
+            {
+                ++matching;
+                if (matching == 4) return true;
+            } else
+            {
+                matching = 0;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool checkVertical(char mark)
+{
+    int matching = 0;
+    for (int colIndex = 0; colIndex < 7; colIndex++)
+    {
+        for (int rowIndex = 0; rowIndex < 6; rowIndex++)
+        {
+            if (columns[colIndex][rowIndex] == mark)
+            {
+                ++matching;
+                if (matching == 4) return true;
+            } else
+            {
+                matching = 0;
+            }
+        }
+    }
+
+    return false;
+}
+
 bool hasMadeARow(bool isPlayer)
 {
     char mark = isPlayer ? 'X' : 'O';
 
     // Horizontal
-    int matching = 0;
-    for (int colIndex = 0; colIndex < 7; colIndex++)
-    {
-        if (columns[colIndex][0] == mark || columns[colIndex][1] == mark || columns[colIndex][2] == mark || columns[colIndex][3] == mark)
-        {
-            ++matching;
-            if (matching == 4) return true; 
-        }
-    }
+    if (checkHorizontal(mark)) return true;
 
     // Vertical
-    matching = 0;
-    for (int rowIndex = 0; rowIndex < 7; rowIndex++)
-    {
-        if (columns[0][rowIndex] == mark || columns[1][rowIndex] == mark || columns[2][rowIndex] == mark || columns[3][rowIndex] == mark)
-        {
-            ++matching;
-            if (matching == 4) return true; 
-        }
-    }
+    if (checkVertical(mark)) return true;
 
-    // Diagonal-up
-
-    // Diagonal-down
+    // Check the diagonal up-right lines,
+    // we can only start these at position 0, 2.
+    if (checkDiagonalRight(mark, 0, 2, true)) return true;
+    if (checkDiagonalRight(mark, 0, 1, true)) return true;
+    if (checkDiagonalRight(mark, 0, 0, true)) return true;
+    if (checkDiagonalRight(mark, 1, 1, true)) return true;
+    if (checkDiagonalRight(mark, 1, 2, true)) return true;
+    if (checkDiagonalRight(mark, 1, 3, true)) return true;
+    // Check the diagonal down-right lines
+    // we can only start these at position 0, 3.
+    if (checkDiagonalRight(mark, 0, 3, false)) return true;
+    if (checkDiagonalRight(mark, 0, 4, false)) return true;
+    if (checkDiagonalRight(mark, 0, 5, false)) return true;
+    if (checkDiagonalRight(mark, 1, 5, false)) return true;
+    if (checkDiagonalRight(mark, 2, 5, false)) return true;
+    if (checkDiagonalRight(mark, 3, 5, false)) return true;
 
     return false;
 }
