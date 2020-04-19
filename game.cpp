@@ -118,7 +118,20 @@ bool hasMadeARow(bool isPlayer)
 
 void drawBoard()
 {
-    system("clear");
+    try
+    {
+        // Linux/MacOS
+        system("clear");
+    }
+    catch(const std::exception& e) {}
+
+    try
+    {
+        // Windows
+        system("cls");
+    }
+    catch(const std::exception& e) {}
+    
     cout << "\nConnect 4\n";
     cout << endl;
     cout << " _________________________________________" << endl;
