@@ -1,6 +1,7 @@
 #include<iostream>
 #include <chrono>
 #include <thread>
+#include <stdio.h>
 using namespace std;
 
 
@@ -23,14 +24,16 @@ class Game
 
     void start()
     {
+        clearBoard();
         drawBoard();
         cout << "Game starts!" << endl;
         cout << endl;
 
         bool gameOver = false;
-        do
+        bool isPlayerTurn = true;
+        while(!gameOver)
         {
-            bool isPlayerTurn = (turnCount % 2 == 0);
+            isPlayerTurn = (turnCount % 2 == 0);
             int column = 0;
             if (isPlayerTurn)
             {
@@ -44,18 +47,14 @@ class Game
                 column = rand() % 7;
             }
             
-            bool win = placeToken(column, isPlayerTurn);
-
-            if(win)
-            {
-                cout << isPlayerTurn ? "You won!" : "CPU wins :(";
-                gameOver = true;
-            }
-
+            gameOver = placeToken(column, isPlayerTurn);
+            clearBoard();
             drawBoard();
 
             ++turnCount;
-        } while (!gameOver);
+        }
+
+        cout << isPlayerTurn ? "You won!" : "CPU wins :(";
     }
 
     private: void sleep()
@@ -213,5 +212,6 @@ int main()
 {
     Game game;
     game.start();
+    getchar();
     return 0;
 }
