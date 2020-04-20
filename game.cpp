@@ -148,7 +148,7 @@ bool checkForLine(bool isPlayer, int startX, int startY)
 
     // check diagonal right down
     matching = 0;
-    int row = startY + 3;
+    row = startY + 3;
     for (int col = startX - 3; col < startX + 4; col++)
     {
         char position = columns[col][row];
