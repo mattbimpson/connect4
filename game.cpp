@@ -142,7 +142,7 @@ void drawBoard()
     try
     {
         // Linux/MacOS
-        // system("clear");
+        system("clear");
     }
     catch(const std::exception& e) {}
 
