@@ -130,8 +130,38 @@ bool checkForLine(bool isPlayer, int startX, int startY)
     }
 
     // check diagonal right up
+    matching = 0;
+    int row = startY - 3;
+    for (int col = startX -3; col < startX + 4; col++)
+    {
+        char position = columns[col][row];
+        if (position == mark)
+        {
+            ++matching;
+            if (matching == 4) return true;
+        } else {
+            matching = 0;
+        }
+
+        ++row;
+    }
 
     // check diagonal right down
+    matching = 0;
+    int row = startY + 3;
+    for (int col = startX - 3; col < startX + 4; col++)
+    {
+        char position = columns[col][row];
+        if (position == mark)
+        {
+            ++matching;
+            if (matching == 4) return true;
+        } else {
+            matching = 0;
+        }
+
+        --row;
+    }
 
     return false;
 }
