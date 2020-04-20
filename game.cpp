@@ -98,8 +98,10 @@ bool checkForLine(bool isPlayer, int startX, int startY)
     char mark = getMark(isPlayer);
 
     int matching = 0;
+    int startofLine = startY - 4;
+    int endOfLine = startY + 4;
     // check vertical
-    for (int rowIndex = (startY - 4); rowIndex < (startY + 4); rowIndex++)
+    for (int rowIndex = startofLine; rowIndex < endOfLine; rowIndex++)
     {
         if (columns[startX][rowIndex] == mark)
         {
@@ -112,10 +114,12 @@ bool checkForLine(bool isPlayer, int startX, int startY)
     }
 
     matching = 0;
+    startofLine = startX - 4;
+    endOfLine = startX + 4;
     // check horizontal
-    for (int colIndex = (startX - 4); colIndex < (startX + 4); colIndex++)
+    for (int colIndex = startofLine; colIndex < endOfLine; colIndex++)
     {
-        if (columns[startX][startY] == mark)
+        if (columns[colIndex][startY] == mark)
         {
             ++matching;
             if (matching == 4) return true;
@@ -138,7 +142,7 @@ void drawBoard()
     try
     {
         // Linux/MacOS
-        system("clear");
+        // system("clear");
     }
     catch(const std::exception& e) {}
 
