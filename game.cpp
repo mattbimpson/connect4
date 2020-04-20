@@ -16,9 +16,9 @@ char columns[7][6] = {
 int turnCount = 0;
 
 void drawBoard();
-void placeToken(int col, bool isPlayer);
+bool placeToken(int col, bool isPlayer);
 void sleep();
-bool hasMadeARow(bool isPlayer);
+bool checkForLine(bool isPlayer, int startX, int startY);
 
 int main()
 {
@@ -43,9 +43,9 @@ int main()
             column = rand() % 7;
         }
         
-        placeToken(column, isPlayerTurn);
+        bool win = placeToken(column, isPlayerTurn);
 
-        if(hasMadeARow(isPlayerTurn))
+        if(win)
         {
             cout << isPlayerTurn ? "You won!" : "CPU wins :(";
             cin.get();
@@ -75,113 +75,63 @@ bool isOccupied(char text)
     return text != ' ';
 }
 
-void placeToken(int col, bool isPlayer)
+bool placeToken(int col, bool isPlayer)
 {
+    int rowIndex = 0;
     --col;
     for(char &text : columns[col])
     {
         if (!isOccupied(text))
         {
             text = getMark(isPlayer);
-            return;
-        }
-    }
-}
-
-bool checkDiagonalRight(char mark, int startX, int startY, bool up)
-{
-    int matching = 0;
-    int rowIndex = startY;
-    for (int colIndex = startX; colIndex < 7; colIndex++)
-    {
-        if (columns[colIndex][rowIndex] == mark)
-        {
-            ++matching;
-            if (matching == 4) return true;
+            return checkForLine(isPlayer, col, rowIndex);
         }
 
-        if (up)
-            ++rowIndex;
-        else
-            --rowIndex;
+        ++rowIndex;
     }
 
     return false;
 }
 
-bool checkHorizontal(char mark)
-{
-    int matching = 0;
-    for (int rowIndex = 0; rowIndex < 6; rowIndex++)
-    {
-        for (int colIndex = 0; colIndex < 7; colIndex++)
-        {
-            if (columns[colIndex][rowIndex] == mark)
-            {
-                ++matching;
-                if (matching == 4) return true;
-            } else
-            {
-                matching = 0;
-            }
-        }
-    }
-
-    return false;
-}
-
-bool checkVertical(char mark)
-{
-    int matching = 0;
-    for (int colIndex = 0; colIndex < 7; colIndex++)
-    {
-        for (int rowIndex = 0; rowIndex < 6; rowIndex++)
-        {
-            if (columns[colIndex][rowIndex] == mark)
-            {
-                ++matching;
-                if (matching == 4) return true;
-            } else
-            {
-                matching = 0;
-            }
-        }
-    }
-
-    return false;
-}
-
-// Todo: very inefficient with so many loops,
-// figure out how to improve this
-bool hasMadeARow(bool isPlayer)
+bool checkForLine(bool isPlayer, int startX, int startY)
 {
     char mark = getMark(isPlayer);
 
-    // Horizontal
-    if (checkHorizontal(mark)) return true;
+    int matching = 0;
+    // check vertical
+    for (int rowIndex = (startY - 4); rowIndex < (startY + 4); rowIndex++)
+    {
+        if (columns[startX][rowIndex] == mark)
+        {
+            ++matching;
+            if (matching == 4) return true;
+        } else
+        {
+            matching = 0;
+        }
+    }
 
-    // Vertical
-    if (checkVertical(mark)) return true;
+    matching = 0;
+    // check horizontal
+    for (int colIndex = (startX - 4); colIndex < (startX + 4); colIndex++)
+    {
+        if (columns[startX][startY] == mark)
+        {
+            ++matching;
+            if (matching == 4) return true;
+        } else
+        {
+            matching = 0;
+        }
+    }
 
-    // Check the diagonal up-right lines,
-    // we can only start these at position 0, 2.
-    if (checkDiagonalRight(mark, 0, 2, true)) return true;
-    if (checkDiagonalRight(mark, 0, 1, true)) return true;
-    if (checkDiagonalRight(mark, 0, 0, true)) return true;
-    if (checkDiagonalRight(mark, 1, 1, true)) return true;
-    if (checkDiagonalRight(mark, 1, 2, true)) return true;
-    if (checkDiagonalRight(mark, 1, 3, true)) return true;
-    // Check the diagonal down-right lines
-    // we can only start these at position 0, 3.
-    if (checkDiagonalRight(mark, 0, 3, false)) return true;
-    if (checkDiagonalRight(mark, 0, 4, false)) return true;
-    if (checkDiagonalRight(mark, 0, 5, false)) return true;
-    if (checkDiagonalRight(mark, 1, 5, false)) return true;
-    if (checkDiagonalRight(mark, 2, 5, false)) return true;
-    if (checkDiagonalRight(mark, 3, 5, false)) return true;
+    // check diagonal right up
+
+    // check diagonal right down
 
     return false;
 }
+
 
 void drawBoard()
 {
