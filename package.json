@@ -1,0 +1,22 @@
+{
+  "name": "connect4",
+  "version": "1.0.0",
+  "description": "connect four game in c++",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "./connect4",
+    "test": "cxxtestgen --error-printer -o runner.cpp tests/movetests.h && g++ runner.cpp -o runner && ./tests/runner"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/mbimpson/connect4.git"
+  },
+  "keywords": [
+    "connect4"
+  ],
+  "author": "matt bimpson",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/mbimpson/connect4#readme"
+}
