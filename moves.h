@@ -1,3 +1,6 @@
+#ifndef MOVES_H
+#define MOVES_H
+
 #include<vector>
 
 namespace Connect4
@@ -9,3 +12,5 @@ namespace Connect4
         public: bool placeToken(int col, bool isPlayer);
     };
 }
+
+#endif

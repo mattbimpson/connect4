@@ -1,3 +1,6 @@
+#ifndef CPU_H
+#define CPU_H
+
 namespace Connect4 
 {
     class Cpu
@@ -5,3 +8,5 @@ namespace Connect4
         public: int chooseColumn();
     };
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef BOARD_H
+#define BOARD_H
+
 #include<vector>
 
 namespace Connect4
@@ -11,3 +14,5 @@ namespace Connect4
         public: bool isOutOfBounds(int x, int y);
     };
 }
+
+#endif
