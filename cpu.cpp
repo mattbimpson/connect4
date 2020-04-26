@@ -6,57 +6,46 @@
 using namespace std;
 using namespace Connect4;
 
-class Cpu
+
+Cpu::Cpu(Board board, Moves moves)
 {
-    private: Board _board;
-    private: Moves _moves;
-    private: int _style = Defensive;
-    private: vector<vector<char>> _columns;
-    private: char _human = 'X';
-    private: char _cpu = 'O';
+    _board = board;
+    _moves = moves;
+    _style = rand() % 2;
+};
 
-    public: Cpu()
+int Cpu::chooseColumn()
+{
+    Moves moves;
+    _columns = moves.getColumns();
+
+    if (_style == Defensive)
     {
-        _style = rand() % 2;
-    };
-
-    private: enum PlayStyle
-    {
-        Defensive,
-        Offensive
-    };
-
-    public: int chooseColumn()
-    {
-        _columns = _moves.getColumns();
-
-        if (_style == Defensive)
-        {
-            return blockLongest();
-        }
-
-        return attemptLine();
+        return blockLongest();
     }
 
-    private: int blockLongest()
+    return attemptLine();
+}
+
+int Cpu::blockLongest()
+{
+    Board board;
+    for (int x = 0; x < 7; x++)
     {
-        for (int x = 0; x < 7; x++)
+        for (int y = 5; y >= 0; y--)
         {
-            for (int y = 5; y >= 0; y--)
+            if (board.isOutOfBounds(x, y)) continue;
+            if (_columns[x][y] == _human)
             {
-                if (_board.isOutOfBounds(x, y)) continue;
-                if (_columns[x][y] == _human)
-                {
-                    return x;
-                }
+                return x;
             }
         }
-
-        return 0;
     }
 
-    private: int attemptLine()
-    {
-        return 0;
-    }
-};
+    return 0;
+}
+
+int Cpu::attemptLine()
+{
+    return 0;
+}
