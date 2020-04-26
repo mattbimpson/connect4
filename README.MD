@@ -16,6 +16,7 @@ See http://cxxtest.com/guide.html#gettingStarted for more details.
 
 # Npm scripts
 Added a few scripts for ease of use.
+
 - npm run compile   -   Compiles the application
 - npm run start     -   Runs the application
 - npm run test      -   Runs unit tests
