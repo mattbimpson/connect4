@@ -13,3 +13,9 @@ I am using CxxTest as the testing framework.
 - You now have your test executable. Execute this to see the results: ./runner
 
 See http://cxxtest.com/guide.html#gettingStarted for more details.
+
+# Npm scripts
+Added a few scripts for ease of use.
+- npm run compile   -   Compiles the application
+- npm run start     -   Runs the application
+- npm run test      -   Runs unit tests
