@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "compile": "g++ game.cpp -o connect4",
+    "compile": "g++ main.cpp -o connect4",
     "start": "./connect4",
     "test": "cxxtestgen --error-printer -o tests/runner.cpp tests/movetests.h && g++ tests/runner.cpp -o tests/runner && ./tests/runner"
   },

@@ -1,7 +1,10 @@
 #include<iostream>
 #include<vector>
+#include "board.h"
+#include "moves.h"
 
 using namespace std;
+using namespace Connect4;
 
 class Moves
 {
@@ -38,16 +41,9 @@ class Moves
         return false;
     }
 
-    private: bool isOutOfBounds(int x, int y)
-    {
-        if (x < 0 || x > 6) return true;
-        if (y < 0 || y > 5) return true;
-
-        return false;
-    }
-
     private: bool checkForLine(bool isPlayer, int startX, int startY)
     {
+        Board _board;
         char mark = getMark(isPlayer);
 
         int matching = 0;
@@ -56,7 +52,7 @@ class Moves
         // check vertical
         for (int rowIndex = startofLine; rowIndex < endOfLine; rowIndex++)
         {
-            if (isOutOfBounds(startX, rowIndex)) continue;
+            if (_board.isOutOfBounds(startX, rowIndex)) continue;
             if (_columns[startX][rowIndex] == mark)
             {
                 ++matching;
@@ -73,7 +69,7 @@ class Moves
         // check horizontal
         for (int colIndex = startofLine; colIndex < endOfLine; colIndex++)
         {
-            if (isOutOfBounds(colIndex, startY)) continue;
+            if (_board.isOutOfBounds(colIndex, startY)) continue;
             if (_columns[colIndex][startY] == mark)
             {
                 ++matching;
@@ -89,7 +85,7 @@ class Moves
         int row = startY - 3;
         for (int col = startX -3; col < startX + 4; col++)
         {
-            if (isOutOfBounds(col, row)) continue;
+            if (_board.isOutOfBounds(col, row)) continue;
             if (_columns[col][row] == mark)
             {
                 ++matching;
@@ -106,7 +102,7 @@ class Moves
         row = startY + 3;
         for (int col = startX - 3; col < startX + 4; col++)
         {
-            if (isOutOfBounds(col, row)) continue;
+            if (_board.isOutOfBounds(col, row)) continue;
             if (_columns[col][row] == mark)
             {
                 ++matching;

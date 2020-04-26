@@ -1,8 +1,10 @@
 #include<iostream>
 #include<vector>
+#include "board.h"
 using namespace std;
+using namespace Connect4;
 
-class Drawing
+class Board
 {
     public: void drawBoard(vector<vector<char>> columns)
     {
@@ -45,5 +47,13 @@ class Drawing
             system("cls");
         }
         catch(const std::exception& e) {}
+    }
+
+    public: bool isOutOfBounds(int x, int y)
+    {
+        if (x < 0 || x > 6) return true;
+        if (y < 0 || y > 5) return true;
+
+        return false;
     }
 };
