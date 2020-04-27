@@ -47,7 +47,7 @@ void start()
         {
             cout << "CPU takes their turn..." << endl;
             sleep();
-            column = cpu.chooseColumn(_moves);
+            column = cpu.chooseColumn(_moves) + 1;
         }
         
         gameOver = _moves.placeToken(column, isPlayerTurn);

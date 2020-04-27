@@ -21,17 +21,16 @@ int Cpu::chooseColumn(Moves moves)
         return blockLongest(_columns);
     }
 
-    return attemptLine();
+    return attemptLine(_columns);
 }
 
 int Cpu::blockLongest(vector<vector<char>> columns)
 {
-    Board board;
+    // todo - only blocks longest vertical
     for (int x = 0; x < 7; x++)
     {
-        for (int y = 5; y >= 0; y--)
+        for (int y = 5; y --> 0; )
         {
-            if (board.isOutOfBounds(x, y)) continue;
             if (columns[x][y] == _human)
             {
                 return x;
@@ -42,7 +41,7 @@ int Cpu::blockLongest(vector<vector<char>> columns)
     return 0;
 }
 
-int Cpu::attemptLine()
+int Cpu::attemptLine(vector<vector<char>> columns)
 {
-    return 0;
+    return rand() % 7;
 }

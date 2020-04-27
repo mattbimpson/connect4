@@ -26,7 +26,7 @@ namespace Connect4
 
         private: int blockLongest(std::vector<std::vector<char>>);
 
-        private: int attemptLine();
+        private: int attemptLine(std::vector<std::vector<char>> columns);
     };
 }
 
