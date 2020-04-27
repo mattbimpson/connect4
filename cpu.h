@@ -9,27 +9,24 @@ namespace Connect4
 {
     class Cpu
     {
-        Moves _moves;
-        Board _board;
-
-        enum PlayStyle
+        private: enum PlayStyle
         {
             Defensive,
             Offensive
         };
 
-        int _style = Defensive;
-        std::vector<std::vector<char>> _columns;
-        char _human = 'X';
-        char _cpu = 'O';
+        private: int _style = Defensive;
+        private: std::vector<std::vector<char>> _columns;
+        private: char _human = 'X';
+        private: char _cpu = 'O';
 
-        public: Cpu(Board board, Moves moves);
+        public: Cpu();
 
-        public: int chooseColumn();
+        public: int chooseColumn(Moves moves);
 
-        public: int blockLongest();
+        private: int blockLongest(std::vector<std::vector<char>>);
 
-        public: int attemptLine();
+        private: int attemptLine();
     };
 }
 

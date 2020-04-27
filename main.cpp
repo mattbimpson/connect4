@@ -25,6 +25,7 @@ int main()
 
 void start()
 {
+    Cpu cpu;
     _board.clearBoard();
     drawBoard();
     cout << "Game starts!" << endl;
@@ -34,8 +35,9 @@ void start()
     bool isPlayerTurn = true;
     while(!gameOver)
     {
+        int column;
         isPlayerTurn = (_turnCount % 2 == 0);
-        int column = 0;
+        
         if (isPlayerTurn)
         {
             cout << "Choose a column #1 - 7:" << endl;
@@ -45,7 +47,7 @@ void start()
         {
             cout << "CPU takes their turn..." << endl;
             sleep();
-            column = rand() % 7;
+            column = cpu.chooseColumn(_moves);
         }
         
         gameOver = _moves.placeToken(column, isPlayerTurn);
