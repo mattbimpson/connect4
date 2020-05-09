@@ -41,7 +41,6 @@ void start()
         if (isPlayerTurn)
         {
             cout << "Choose a column #1 - 7:" << endl;
-            cin.clear();
 
             bool validInput;
             validInput = false;
