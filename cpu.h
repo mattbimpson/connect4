@@ -20,7 +20,7 @@ namespace Connect4
         private: char _human = 'X';
         private: char _cpu = 'O';
 
-        public: Cpu();
+        public: Cpu(int playStyle);
 
         public: int chooseColumn(Moves moves);
 

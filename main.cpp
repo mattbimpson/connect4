@@ -15,7 +15,6 @@ void    sleep();
 void    start();
 void    drawBoard();
 
-
 int main()
 {
     start();
@@ -25,7 +24,8 @@ int main()
 
 void start()
 {
-    Cpu cpu;
+    int playStyle = ((double) rand() / (RAND_MAX)) + 1;
+    Cpu cpu = Cpu(playStyle);
     _board.clearBoard();
     drawBoard();
     cout << "Game starts!" << endl;
@@ -41,8 +41,18 @@ void start()
         if (isPlayerTurn)
         {
             cout << "Choose a column #1 - 7:" << endl;
-            cout << endl;
-            cin >> column;
+            cin.clear();
+
+            bool validInput;
+            validInput = false;
+            while(!validInput)
+            {
+                validInput = true;
+                cin >> column;
+                validInput = (column > 0 && column <= 7);
+                cin.clear();
+                cin.ignore();
+            };
         } else
         {
             cout << "CPU takes their turn..." << endl;

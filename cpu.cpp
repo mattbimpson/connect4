@@ -1,5 +1,6 @@
 #include<vector>
 #include<stdlib.h>
+#include<iostream>
 #include "cpu.h"
 #include "board.h"
 #include "moves.h"
@@ -7,13 +8,14 @@ using namespace std;
 using namespace Connect4;
 
 
-Cpu::Cpu()
+Cpu::Cpu(int playStyle)
 {
-    _style = rand() % 1;
+    _style = playStyle;
 };
 
 int Cpu::chooseColumn(Moves moves)
 {
+    cout << "style: " << _style;
     _columns = moves.getColumns();
 
     if (_style == Defensive)
