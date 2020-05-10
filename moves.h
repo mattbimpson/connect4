@@ -15,7 +15,7 @@ namespace Connect4
 
         private: char getMark(bool isPlayer);
 
-        private: bool isOccupied(char text);
+        public: bool isOccupied(char text);
     };
 }
 

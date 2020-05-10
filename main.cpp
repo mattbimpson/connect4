@@ -25,7 +25,7 @@ int main()
 void start()
 {
     int playStyle = ((double) rand() / (RAND_MAX)) + 1;
-    Cpu cpu = Cpu(playStyle);
+    Cpu cpu = Cpu(playStyle, _moves);
     _board.clearBoard();
     drawBoard();
     cout << "Game starts!" << endl;
@@ -56,7 +56,7 @@ void start()
         {
             cout << "CPU takes their turn..." << endl;
             sleep();
-            column = cpu.chooseColumn(_moves) + 1;
+            column = cpu.chooseColumn(_turnCount == 1) + 1;
         }
         
         gameOver = _moves.placeToken(column, isPlayerTurn);
