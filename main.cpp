@@ -66,7 +66,9 @@ void start()
         ++_turnCount;
     }
 
-    cout << isPlayerTurn ? "You won!" : "CPU wins :(";
+    string result = (isPlayerTurn) ? "You won!" : "CPU wins :(";
+    cout << result;
+    sleep();
 }
 
 void sleep()
