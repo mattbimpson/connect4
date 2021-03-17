@@ -54,7 +54,11 @@ bool Moves::checkForLine(bool isPlayer, int startX, int startY)
         if (_columns[startX][rowIndex] == mark)
         {
             ++matching;
-            if (matching == 4) return true;
+            if (matching == 4)
+            {
+                showLine(startX, rowIndex, 0);
+                return true;
+            };
         } else
         {
             matching = 0;
@@ -71,7 +75,11 @@ bool Moves::checkForLine(bool isPlayer, int startX, int startY)
         if (_columns[colIndex][startY] == mark)
         {
             ++matching;
-            if (matching == 4) return true;
+            if (matching == 4)
+            {
+                showLine(colIndex, startY, 1);
+                return true;
+            };
         } else
         {
             matching = 0;
@@ -87,7 +95,11 @@ bool Moves::checkForLine(bool isPlayer, int startX, int startY)
         if (_columns[col][row] == mark)
         {
             ++matching;
-            if (matching == 4) return true;
+            if (matching == 4)
+            {
+                showLine(col, row, 2);
+                return true;
+            }
         } else {
             matching = 0;
         }
@@ -104,7 +116,12 @@ bool Moves::checkForLine(bool isPlayer, int startX, int startY)
         if (_columns[col][row] == mark)
         {
             ++matching;
-            if (matching == 4) return true;
+            if (matching == 4)
+            if (matching == 4)
+            {
+                showLine(col, row, 3);
+                return true;
+            }
         } else {
             matching = 0;
         }
@@ -123,4 +140,39 @@ char Moves::getMark(bool isPlayer)
 bool Moves::isOccupied(char text)
 {
     return text != ' ';
+}
+
+void Moves::showLine(int endX, int endY, int direction)
+{
+    if (direction == 0) // vertical
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            _columns[endX][endY - i] = '|';
+        }
+    }
+
+    if (direction == 1) // horizontal
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            _columns[endX - i][endY] = '-';
+        }
+    }
+
+    if (direction == 2) // diagonal left
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            _columns[endX - i][endY - i] = '/';
+        }
+    }
+
+    if (direction == 3) // diagonal right
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            _columns[endX + i][endY + i] = '\\';
+        }
+    }
 }

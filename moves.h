@@ -11,11 +11,21 @@ namespace Connect4
 
         public: bool placeToken(int col, bool isPlayer);
 
+        public: bool isOccupied(char text);
+
         private: bool checkForLine(bool isPlayer, int startX, int startY);
 
         private: char getMark(bool isPlayer);
 
-        public: bool isOccupied(char text);
+        private: enum Direction
+        {
+            Vertical,
+            Horizontal,
+            DiagonalLeft,
+            DiagonalRight
+        };
+
+        private: void showLine(int endX, int endY, int direction);
     };
 }
 
